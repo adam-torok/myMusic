@@ -1,0 +1,26 @@
+.footer{
+    background-color: black;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 1.5rem;
+    justify-content: left;
+    padding-left: 2rem;
+}
+.footer li{
+    color:white;
+    list-style-type: none;
+    padding: 3px 0 15px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+
+    line-height: 1.5;
+    text-decoration: none;
+}
+.footer li:hover{
+    color:#f05123 ;
+    cursor: pointer;
+}
+ul.socials{
+    float: right;
+ }

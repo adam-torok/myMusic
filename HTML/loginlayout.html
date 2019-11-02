@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="/HTML/CSS/main.css">
+      <link rel="stylesheet" href="/HTML/CSS/fonts.css">
+
+      <script src="https://kit.fontawesome.com/75ad4010ea.js" crossorigin="anonymous"></script>
+      <title>Login into myMusic!</title>
+   </head>
+   <style>  body{  
+       background-image: linear-gradient( rgb(19, 13, 10), rgba(0, 0, 0, 0.4), rgba(19, 13, 10,40)), url(/img/passwordreset.jpg);
+
+     }</style>
+   <body>
+  
+      <h1 style="color:white">Bejelentkezés</h1>
+      <div class="formholder">
+         <div class="form">
+            <form class="signupForm" method="POST" action="../PHP/login.php">
+               <input class="inputFields" type="text" placeholder="Felhasználónév" id="username" name="username" required>
+               <br>
+               <br>
+               <input class="inputFields" type="password" placeholder="Jelszó" id="password" name="password" required>
+               <br>
+               <br>
+               <input type="submit" id="login" value="Bejelentkezés">
+            </form>
+            <form action="forgotpassword.php">
+              <h2><a href="password-forget.html">elfelejtett jelszó?</a></h2>
+            </form>
+
+         </div>
+      </div>
+   </body>
+</html>
