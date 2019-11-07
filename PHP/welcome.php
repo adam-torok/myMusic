@@ -83,7 +83,7 @@ if(mysqli_connect_error()) die('nem sikerült a db csatlakozás');
       <h2>Popular playlists from the myMusic community</h2>
   </div>
       <div class="row">
-        <?php $sql = "SELECT * FROM songs WHERE `genre` = 'Alternatív'";
+        <?php $sql = "SELECT * FROM songs WHERE `genre` = 'Alternatív'  AND  approved = 1";
         $result = mysqli_query($link,$sql);
         while($row = mysqli_fetch_assoc($result)){
    //A lekérdezésnek megfelelően egy row változóba teszem a resultot
@@ -108,7 +108,7 @@ if(mysqli_connect_error()) die('nem sikerült a db csatlakozás');
         <h2>Popular playlists from the myMusic community</h2>
 </div>
         <div class="row">
-        <?php $sql = "SELECT * FROM songs  WHERE `genre` = 'Tropical'";
+        <?php $sql = "SELECT * FROM songs  WHERE `genre` = 'Tropical' AND  approved = 1";
         $result = mysqli_query($link,$sql);
 
  while($row = mysqli_fetch_assoc($result)) {
@@ -135,7 +135,7 @@ if(mysqli_connect_error()) die('nem sikerült a db csatlakozás');
         <h2>Popular playlists from the myMusic community</h2>
     </div>
         <div class="row">
-        <?php $sql = "SELECT * FROM songs WHERE `genre` = 'Rap'";
+        <?php $sql = "SELECT * FROM songs WHERE `genre` = 'Rap' AND  approved = 1";
         $result = mysqli_query($link,$sql);
         while($row = mysqli_fetch_assoc($result)) {
       //A lekérdezésnek megfelelően egy row változóba teszem a resultot
@@ -160,7 +160,7 @@ if(mysqli_connect_error()) die('nem sikerült a db csatlakozás');
         <h2>Popular playlists from the myMusic community</h2>
 </div>
         <div class="row">
-        <?php $sql = "SELECT * FROM songs WHERE `genre` = 'Classical' ORDER BY time DESC";
+        <?php $sql = "SELECT * FROM songs WHERE `genre` = 'Classical' AND  approved = 1";
         $result = mysqli_query($link,$sql);
 
  while($row = mysqli_fetch_assoc($result)) {
@@ -186,7 +186,7 @@ if(mysqli_connect_error()) die('nem sikerült a db csatlakozás');
         <h2>Popular playlists from the myMusic community</h2>
       </div>
         <div class="row">
-        <?php $sql = "SELECT * FROM songs WHERE `genre` = 'Pop'";
+        <?php $sql = "SELECT * FROM songs WHERE `genre` = 'Pop' AND  approved = 1";
         $result = mysqli_query($link,$sql);
         while($row = mysqli_fetch_assoc($result)) {
       //A lekérdezésnek megfelelően egy row változóba teszem a resultot
@@ -211,7 +211,7 @@ if(mysqli_connect_error()) die('nem sikerült a db csatlakozás');
     <h2>Popular playlists from the myMusic community</h2>
     </div>
         <div class="row">
-        <?php $sql = "SELECT * FROM songs WHERE `genre` = 'Future'";
+        <?php $sql = "SELECT * FROM songs WHERE `genre` = 'Future' AND  approved = 1";
         $result = mysqli_query($link,$sql);
 
  while($row = mysqli_fetch_assoc($result)) {

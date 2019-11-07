@@ -63,13 +63,14 @@ if(isset($_POST['save_music'])){
 
 //PREPARED STATEMENTEK, A VÉDELEM ÉRDEKÉBEN
 if(move_uploaded_file($_FILES['musicUpLoad']['tmp_name'],$target) && (move_uploaded_file($_FILES['albumUpload']['tmp_name'],$targetForAlbum))) {
-    $sql = "INSERT INTO songs (artist, name, genre, filename, covername, uploadedby) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO songs (artist, name, genre, filename, covername, uploadedby, approved) VALUES (?, ?, ?, ?, ?, ?,?)";
     $stmt = mysqli_stmt_init($link);
+    $approveStartValue = 0;
     if(!mysqli_stmt_prepare($stmt,$sql)){
         echo "SQL statement Failed";
     }
     else{
-        mysqli_stmt_bind_param($stmt, "ssssss",$a,$mn,$g,$mfn,$c,$u);
+        mysqli_stmt_bind_param($stmt, "sssssss",$a,$mn,$g,$mfn,$c,$u,$approveStartValue);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
     }
