@@ -1,5 +1,5 @@
 <?php
-include "config.php";
+require_once('config.php');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -15,10 +15,9 @@ $email = filter_input(INPUT_POST, 'email');
 if (!empty($username)){
 if (!empty($password)){
 if (!empty($email)){
-
 // Create connection
 $conn = new mysqli ($host, $dbusername, $dbpassword, $dbname);
-$sql = "INSERT INTO $dbname (felhnev, jelszo, email) values ('$username','$password', '$email')";
+$sql = "INSERT INTO $dbname (felhnev, jelszo, email) values ('$username', SHA('$password'), '$email')";
 if ($conn->query($sql)){
   $mail = new PHPMailer(true);
     //Server settings
@@ -48,11 +47,6 @@ if ($conn->query($sql)){
     $mail->AltBody = 'Köszönjük hogy minket választott'; // ez a body ha nem támogatja a böngésző a html emailt
 
     $mail->send();
-    
-   
-
-
-
   header("Location: ../HTML/loginlayout.html");
 }
 else{

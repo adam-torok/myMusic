@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 // Session indítása
 include_once("config.php");
 // Config file, itt tárolom a connection-hoz való adatokat.
@@ -7,7 +7,7 @@ $conn = new mysqli ($host, $dbusername, $dbpassword, $dbname);
 //Ezek a bejelentkező formból nyert adatok
 $username = mysqli_real_escape_string($conn,$_POST['username']); //A form-ba beírt felhasználónév
 $password = mysqli_real_escape_string($conn,$_POST['password']); //A form-ba beírt jelszó
-$sql = "SELECT * FROM felhasznalo WHERE felhnev = '$username' AND jelszo ='$password'";
+$sql = "SELECT * FROM felhasznalo WHERE felhnev = '$username' AND jelszo = SHA('$password')";
 // SQL parancs, Ez azt nézi meg, hogy van e ilyen felhasználónév, jelszó párosítás.
 $result = mysqli_query($conn,$sql);
 //A result változóba tárolom el a lekérdezést
@@ -34,7 +34,7 @@ if(mysqli_num_rows($result) == 1){
       //Adatbázis kapcsolat bezárása.
 }
 else{
-    echo "<p>Invalid password</p>";
-    //Ha nem jó a jelszó, hibaüzenetet ír ki.
+    header("Location: ../HTML/invalid-password.html");
+        //Ha nem jó a jelszó, hibaüzenet html oldalt ír ki.
 }
 ?>

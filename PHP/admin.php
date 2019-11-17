@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <link rel="stylesheet" href="../HTML/CSS/main.css">
     <link rel="stylesheet" href="../HTML/CSS/fonts.css">
     <link rel="stylesheet" href="../HTML/CSS/header.css">
@@ -20,19 +22,18 @@
 <body>
 <style>
 *{
-  text-align:left!important;
-}
-td{
-  padding:0.5rem;
-  border-bottom:1px dashed white;
+  text-align:center!important;
 }
 table{
-  border: 1px solid white;
-  border-radius:10px;
-  padding:1rem;
+  padding:1rem!important;
 }
 h3{
   color:white;
+}
+th{
+  position: sticky;
+  top: 45px;
+  background-color:grey;
 }
 h2{
   color:white;
@@ -44,8 +45,16 @@ p{
   grid-template-columns:1fr;
   margin:3rem;
 }
+header a{
+    border: none!important;
+}
 </style>
+<header class="nav-down" id="header">
+    <div><a href="admin.php">ZENÉK</a></div>
+     <div><a href="users.php">FELHASZNÁLÓK</a> </div> 
+</header>
 <div class="wrapper">
+<h1 style="color:white">ADMIN FELÜLET - ZENÉK</h1>
 <?php
 require_once('authorize.php');
 require_once("config.php");
@@ -53,17 +62,17 @@ require_once("config.php");
 // Az adatok kiolvasása az adatbázisból
 $dbc = mysqli_connect($dbhost, $dbusername, $dbpassword, $dbname);
 $query = "SELECT * FROM songs ORDER BY id DESC";
-
 $data = mysqli_query($dbc,$query);
 
-echo '<table>'; 
-echo '<th><h3>Artista</h3></td>' ;
-echo '<th><h3>ID</td>' ;
-echo '<th><h3>Zeneszám</th>' ;
-echo '<th><h3>Műfaj</th>' ;
-echo  '<th><h3>Uploadedby</th>';
-echo  '<th><h3>Művelet</th>';
-echo  '<th><h3>Művelet</th>';
+echo '<table class="table-striped table-dark table-bordered table-hover">'; 
+echo '<th><h4>Artista</h3></td>' ;
+echo '<th><h4>ID</td>' ;
+echo '<th><h4>Zeneszám</th>' ;
+echo '<th><h4>Műfaj</th>' ;
+echo  '<th><h4>Uploadedby</th>';
+echo  '<th><h4>Jóváhagyva</th>';
+echo  '<th><h4>Művelet</th>';
+echo  '<th><h4>Művelet</th>';
 
 // A felhasználók tömbjének bejárása while ciklussal
 while($row = mysqli_fetch_array($data)){
