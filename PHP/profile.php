@@ -1,12 +1,6 @@
 <?php
 session_start();
-include('processPicture.php');
-include('uploadmusic.php');
-$host = "localhost";
-$dbusername = "root";
-$dbpassword = "qwert";
-$dbname = "felhasznalo";
-
+require_once('config.php');
 //csatlakozás felépítése
 $link = @mysqli_connect($dbhost, $dbusername, $dbpassword, $dbname);
 $username = $_POST['username'];
@@ -41,47 +35,10 @@ if(mysqli_connect_error()) die('nem sikerült a db csatlakozás');
         <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
         <script src="https://kit.fontawesome.com/75ad4010ea.js" crossorigin="anonymous"></script>
         <title>Welcome <?php echo $_SESSION['username'];?></title>
-
 </head>
-
 <body>
 <style>
-    .row{
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        height:800px;
-    }
-    .btn{
-        position: relative;
-    padding: 10px;
-    font-family: 'Montserrat', sans-serif;
-    overflow: hidden;
-    font-size: 16px;
-    border-width: 0;
-    outline: none;
-    border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
-    background-color: #f05123;
-    color: #ecf0f1;
-    transition: background-color .3s;
-    }
-    .tile__img{
-        height:250px;
-        width:250px;
-    }
-    .row_inner:hover {
-    transform: none;
-    margin-left:0;
-    margin-right: 0;}
 
-    .cardcontainer{
-        align-items:flex-start;
-        border-right: 0.5px solid rgba(109, 109, 109, 0.379);
-    }
-  .container{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-  }
  h2{
    color:grey;
    font-size:14px;
@@ -92,6 +49,16 @@ if(mysqli_connect_error()) die('nem sikerült a db csatlakozás');
  p{
      text-align:left;
  }
+ .container{
+    display: grid;
+    grid-template-columns:1fr;
+ }
+.upload{
+    margin-left:1rem;
+    width:70%;
+    justify-content:center;
+    justify-self:center;
+}
  </style>
         <header class="nav-down" id="header">
                 <nav class="fill">
@@ -106,32 +73,31 @@ if(mysqli_connect_error()) die('nem sikerült a db csatlakozás');
                     </ul>
                 </nav>
             </header>
+
+<div class="user-header">
+<div class="user-infos">
+     <div class="user-info">
+     <div class="profile-image">
+         <img src="../profileimages/<?php echo $profpic;?>"  alt="profilkép">
+     </div>
+     <div class="user-details">
+        <div class="user-info-type"><h2>Felhasználó</h2></div>
+        <div class="user-info-name"><h2><?php echo $_SESSION['username']?></h2></div>
+        <div class="user-info-date"><h2><?php echo $_SESSION['time']?></h2></div>
+     </div>
+</div>
+</div>
+</div>  
 <div class="container">
-  <div id="bodyblack" class="cardcontainer bodyblack">
-      <img class="profileImage" src="../profileimages/<?php echo $profpic;?>"  alt="profilkép">
-     <h4>ID</h4>
-    <h2><?php echo $_SESSION['id'];?></h2>
-    <h4>Felhasználónév</h4>
-    <h2><?php echo $_SESSION['username']?></h2>
-    <h4>Regrisztáció dátuma</h4>
-    <h2><?php echo $_SESSION['time']?></h2>
-    <form method="post" action="processPicture.php" enctype="multipart/form-data">
-    <h4>Profilkép frissítése</h4>
-    <input class="uploadmusic" type="file" name="profileImage" onChange="displayImage(this)" id="profileImage">
-    <button type="submit" class="btn" id="save_profile" name="save_user">Frissítés!</button>
-    </form>
-    <h4>BIO</h4>
-    <h2><?php echo $_SESSION['bio']?></h2>
-    <input class="inputFields uploadmusic" type="text" name="bio" placeholder="Mondj valamit magadról">
-  </div>
-  <div id="cardcontainer" class="cardcontainer bodyblack">
-    <form method="post" action="uploadmusic.php" enctype="multipart/form-data">
-    <h1>Feltöltés</h1>
+<div class="upload">
+<h1 style="color:white">Feltöltés</h1>
+<form method="post" action="uploadmusic.php" enctype="multipart/form-data">
     <h2 id="nameErrorMessage">  * Maximum 20 karakter.</h2>
 <input class="inputFields uploadmusic" onkeydown="checkMusicName()" id="musicName" type="text" placeholder="Zene neve"  name="nameofmusic" required><br><br>
     <h2 id="artistErrorMessage">  * Maximum 20 karakter.</h2>
 <input class="inputFields uploadmusic" onkeydown="checkArtistName()" id="artistName" type="text" placeholder="Előadója"  name="artistofmusic" required><br><br>
 <!--<input class="inputFields uploadmusic" type="text" placeholder="Műfaj"  name="genreofmusic" required><br><br>-->
+
 <select name="genreofmusic">
   <option value="Rap">Rap</option>
   <option value="Classical">Classical</option>
@@ -140,7 +106,6 @@ if(mysqli_connect_error()) die('nem sikerült a db csatlakozás');
   <option value="Pop">Pop</option>
   <option value="Alternatív">Alternatív</option>
 </select>
-  
 <p>Album fotó</p>
 <input class="uploadmusic" type="file" name="albumUpload"  id="albumUpload" required>
 <p>Zene file</p>
@@ -150,30 +115,39 @@ if(mysqli_connect_error()) die('nem sikerült a db csatlakozás');
 
     </form>
   </div>
-  <div class="bodyblack">
-  <h2 style="padding:1rem;color:white">Feltöltött számok:</h2>
-    <div class="row">
-   <?php 
-   $sql = "SELECT * FROM songs WHERE `uploadedby` = '$uname'";
-   $result = mysqli_query($link,$sql); 
-   
-   while($row = mysqli_fetch_assoc($result)) {
-      
-    ?>
-        <div  class="row_inner">
-        <div class="tile">
-        <h2><?php echo $row['artist'];?></h2>
-        <h4><?php echo $row['name']; ?></h4>
-        <div class="tile__media">
-          <img class="tile__img" src="../img/albumcover/<?php echo $row['covername'];?> ">
+<div class="track-container">
+        <?php $sql = "SELECT * FROM songs WHERE `uploadedby` = '$uname'";
+        $result = mysqli_query($link,$sql);
+ while($row = mysqli_fetch_assoc($result)) {?>
+        <div class="track">
+        <div class="thing">
+        <i id="addPlayListButton" class="fas fa-check  fa-1x"></i>
         </div>
-      </div>
+        <div class="track-number">
+        <h2><?php echo $row['artist'];?></h2>
+        </div>
+         <div class="track-number">
+        <h2><?php echo $row['id'];?></h2>
+        </div>
+       
+        <div class="track-added">
+        <h2><?php echo $row['time'];?></h2>
+        </div>
+        <div class="track-audio">
+        <a href="../songs/<?php echo $row['filename']; ?>"></a>
+        <a id="albumcover" href="../img/albumcover/<?php echo $row['covername']; ?>"></a>
+        </div>
+        <div class="track-title">
+        <h2><?php echo $row['name'];?></h2>
+        </div>
         </div>
         <?php 
-      }?>
-   </div>
-  </div>
+      }//while end ?>
+
 </div>
+
+</div>
+
 <div class="footer">
             <ul>
                 <li>

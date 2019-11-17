@@ -1,9 +1,6 @@
 <?php 
 session_start();
-$host = "localhost";
-$dbusername = "root";
-$dbpassword = "qwert";
-$dbname = "felhasznalo";
+require_once('config.php');
 //csatlakozás felépítése
 $link = @mysqli_connect($dbhost, $dbusername, $dbpassword, $dbname);
 $id = $_SESSION['id'];

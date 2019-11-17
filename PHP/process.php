@@ -1,11 +1,7 @@
 <?php
+require_once('config.php');
 $username = $_POST['username'];
 $password = $_POST['password'];
-
-$host = "localhost";
-$dbusername = "root";
-$dbpassword = "root";
-$dbname = "felhasznalo";
 $conn = new mysqli ($host, $dbusername, $dbpassword, $dbname);
 $sql="SELECT * FROM felhasznalo WHERE username='$username'";
 $result=mysql_query($sql);

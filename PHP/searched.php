@@ -69,46 +69,48 @@ if(mysqli_connect_error()) die('nem sikerült a db csatlakozás');
                 </ul>
             </nav>
         </header>
-
-<h1 style="margin-top:10rem">  <?php echo $artistName;?></h1>
-
-
-<div class="container">
-
-
-<div  id="alternativ" class="banner">
-
+<div class="searched-header">
+<h2>  <?php echo "HITS OF "?></h2>
+<h1>  <?php echo $artistName;?></h1>
 </div>
 
-        <div class="row">
+
+<div class="track-container">
         <?php $sql = "SELECT * FROM songs WHERE `artist` = '$artistName'";
         $result = mysqli_query($link,$sql);
-
- while($row = mysqli_fetch_assoc($result)) {
-           ?>
-        <div class="row_inner">
-        <div class="tile">
-        <h2><?php echo $row['artist'];?></h2>
-        <h4><?php echo $row['name']; ?></h4>
-                            <h2>Uploaded by <?php echo $row['uploadedby']; ?></h4>
-        <div class="tile__media">
-          <img class="tile__img" src="../img/albumcover/<?php echo $row['covername'];?> ">
-          <a href="../songs/<?php echo $row['filename']; ?>"></a>
-          <i id="playbutton" class="fas fa-play playbutton"></i>     
+ while($row = mysqli_fetch_assoc($result)) {?>
+        <div class="track">
+        <div class="thing">
+        <i id="addPlayListButton" class="fas fa-plus-circle  fa-1x"></i>
         </div>
-      </div>
+        <div class="track-number">
+        <h2><?php echo $row['artist'];?></h2>
+        </div>
+         <div class="track-number">
+        <h2><?php echo $row['id'];?></h2>
+        </div>
+        <div class="track-added">
+        <h2><?php echo $row['time'];?></h2>
+        </div>
+        <div class="track-audio">
+        <a href="../songs/<?php echo $row['filename']; ?>"></a>
+        <a id="albumcover" href="../img/albumcover/<?php echo $row['covername']; ?>"></a>
+        <i id="playbutton" class="fas fa-play-circle"></i>
+        </div>
+        <div class="track-title">
+        <h2><?php echo $row['name'];?></h2>
+        </div>
         </div>
         <?php 
       }//while end ?>
+   
      </div>
-
-
-<div class="player">
+ <div style="display:none" class="player">
 <audio id="myaudio" style="display:none" id="player" autoplay="off" controls>
          <source  src="songs/" type="audio/mpeg">
                     Your browser does not support the audio element.
                     </audio>  
-</div>
+</div> 
 
         <div class="footer">
             <ul>
@@ -157,12 +159,14 @@ if(mysqli_connect_error()) die('nem sikerült a db csatlakozás');
         });
      
      // EZ KÉNE A SOURCE-NAK LENNIEEEE!
-       
-        
-
         $(document).on('click','#playbutton',function(){
         var src = $(this).parent().find('a').attr('href');     
-            
+        var albumsource = $('#albumcover').attr('href');   
+        // keresse meg az albumcover rejtett a tagnek a h tagjét és mentse el változóba 
+        console.log(albumsource);
+        // A source link felépítése, és css-be beszúrása.
+        albumsource = "url(" + albumsource + ")";
+            var headerChange = $(".searched-header").css("background","linear-gradient(rgba(17, 17, 17, 0.9), rgba(18, 18, 18,1)),"+albumsource);
         // Keresd meg a source-t
         // tedd bele a linket   
        var k = $("#myaudio").attr("src", src);
