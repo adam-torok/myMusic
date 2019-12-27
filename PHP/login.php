@@ -1,15 +1,14 @@
 <?php
-//session_start();
+session_start();
 // Session indítása
-include_once("config.php");
+include_once("CONFIG/config.php");
+// MŰKÖDÉSRŐL BŐVEBBEN : https://github.com/woltery99/myMusic/wiki
 // Config file, itt tárolom a connection-hoz való adatokat.
-$conn = new mysqli ($host, $dbusername, $dbpassword, $dbname);
 //Ezek a bejelentkező formból nyert adatok
-$username = mysqli_real_escape_string($conn,$_POST['username']); //A form-ba beírt felhasználónév
-$password = mysqli_real_escape_string($conn,$_POST['password']); //A form-ba beírt jelszó
+$username = mysqli_real_escape_string($dbc,$_POST['username']); //A form-ba beírt felhasználónév
+$password = mysqli_real_escape_string($dbc,$_POST['password']); //A form-ba beírt jelszó
 $sql = "SELECT * FROM felhasznalo WHERE felhnev = '$username' AND jelszo = SHA('$password')";
-// SQL parancs, Ez azt nézi meg, hogy van e ilyen felhasználónév, jelszó párosítás.
-$result = mysqli_query($conn,$sql);
+$result = mysqli_query($dbc,$sql);
 //A result változóba tárolom el a lekérdezést
 if(mysqli_num_rows($result) == 1){
 // Itt megnézem, hogy csakis ha egy ilyen párosítás van, akkor engedjen be, és lekérem a többi adatot.
@@ -28,13 +27,14 @@ if(mysqli_num_rows($result) == 1){
             $_SESSION['profpic'] = $profpic;
             $_SESSION['bio'] = $bio;
         }
-      header("Location: welcome.php");
+    $_SESSION['logged'] = true;
+    header("Location: welcome.php");
       //A welcome.php-ra átírányítom a felhasználót.
-      $conn->close();
+      $dbc->close();
       //Adatbázis kapcsolat bezárása.
 }
 else{
-    header("Location: ../HTML/invalid-password.html");
-        //Ha nem jó a jelszó, hibaüzenet html oldalt ír ki.
+  echo "<script> alert('Hibás adatok.')</script>";
+  header("Location: ../HTML/loginlayout.html");
 }
 ?>

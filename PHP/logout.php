@@ -1,4 +1,5 @@
 <?php
+// MŰKÖDÉSRŐL BŐVEBBEN : https://github.com/woltery99/myMusic/wiki
 session_start();
 if(isset($_SESSION['id'])){ //Megnézem hogy van e egyáltalán belépve user
     $_SESSION = array();  //A munkameneti változók törléséhez egy üres tömbre állítom a sessiont
